@@ -43,13 +43,13 @@ namespace Gosu
         void set_speed(double speed);
     };
 
-    //! A sample is a short sound that is completely loaded in memory, can be
-    //! played multiple times at once and offers very flexible playback
-    //! parameters. Use samples for everything that's not music.
+    /// A sample is a short sound that is completely loaded in memory, can be
+    /// played multiple times at once and offers very flexible playback
+    /// parameters. Use samples for everything that's not music.
     class Sample
     {
         struct Impl;
-        std::shared_ptr<Impl> pimpl;
+        std::shared_ptr<Impl> m_impl;
 
     public:
         //! Constructs an empty sample that is inaudible when played.

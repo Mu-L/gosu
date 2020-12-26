@@ -44,12 +44,12 @@ Gosu::Sample::Sample()
 
 Gosu::Sample::Sample(const string& filename)
 {
-    pimpl.reset(new Impl(AudioFile(filename)));
+    m_impl.reset(new Impl(AudioFile(filename)));
 }
 
 Gosu::Sample::Sample(Gosu::Reader reader)
 {
-    pimpl.reset(new Impl(AudioFile(reader)));
+    m_impl.reset(new Impl(AudioFile(reader)));
 }
 
 Gosu::Channel Gosu::Sample::play(double volume, double speed, bool looping) const
@@ -59,7 +59,7 @@ Gosu::Channel Gosu::Sample::play(double volume, double speed, bool looping) cons
 
 Gosu::Channel Gosu::Sample::play_pan(double pan, double volume, double speed, bool looping) const
 {
-    if (!pimpl) return Channel();
+    if (!m_impl) return Channel();
 
     Channel channel = allocate_channel();
     
@@ -67,7 +67,7 @@ Gosu::Channel Gosu::Sample::play_pan(double pan, double volume, double speed, bo
     if (channel.current_channel() == NO_CHANNEL) return channel;
     
     ALuint source = al_source_for_channel(channel.current_channel());
-    alSourcei(source, AL_BUFFER, pimpl->buffer);
+    alSourcei(source, AL_BUFFER, m_impl->buffer);
     alSource3f(source, AL_POSITION, pan * 10, 0, 0);
     alSourcef(source, AL_GAIN, max(volume, 0.0));
     alSourcef(source, AL_PITCH, speed);
